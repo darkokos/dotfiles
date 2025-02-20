@@ -1,0 +1,18 @@
+* {
+    font-size: 14px;
+    color: #EEEEEE;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+.module {
+    background-color: rgba(25, 25, 25, 0.75);
+    border-radius: 10px;
+}
+
+.modules-center .module,
+.modules-right .module {
+    padding: 8px;
+}
