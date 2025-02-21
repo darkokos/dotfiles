@@ -1,6 +1,6 @@
 * {
     font-size: 14px;
-    color: #EEEEEE;
+    color: #D0D0D0;
 }
 
 window#waybar {
@@ -8,11 +8,26 @@ window#waybar {
 }
 
 .module {
-    background-color: rgba(25, 25, 25, 0.75);
+    background-color: rgba(27, 30, 53, 0.8);
+    border: 1.25px solid rgba(225, 172, 255, 0.8);
     border-radius: 10px;
 }
 
 .modules-center .module,
 .modules-right .module {
     padding: 8px;
+}
+
+#workspaces button {
+    background-color: rgba(68, 71, 90, 0.8);
+    border-radius: 8.75px;
+    margin: 4px 4px 4px 0;
+}
+
+#workspaces button:first-child {
+    margin-left: 4px;
+}
+
+#workspaces button.active {
+    background-color: rgb(98, 114, 164);
 }
