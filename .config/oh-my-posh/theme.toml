@@ -12,9 +12,9 @@ enable_cursor_positioning = true
     type = 'text'
     style = 'powerline'
     leading_powerline_symbol = "\uE0B6"
-    background = 'magenta'
+    background = 'blue'
     foreground = 'black'
-    template = ' {{ .UserName }}@{{ .HostName }} '
+    template = ' <b>{{ .UserName }}@{{ .HostName }}</b> '
 
   [[blocks.segments]]
     type = 'path'
@@ -22,19 +22,44 @@ enable_cursor_positioning = true
     powerline_symbol = "\uE0BC"
     background = 'cyan'
     foreground = 'black'
+    template = ' <b>{{ .Path }}</b> '
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'powerline'
+    powerline_symbol = "\uE0BC"
+    background = 'green'
+    foreground = 'black'
+    template = ' <b>{{ .HEAD }}</b> '
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'powerline'
+    powerline_symbol = "\uE0BC"
+    background = 'transparent'
+    foreground = 'green'
+    template = "\uE0BB"
 
 [[blocks]]
   type = 'prompt'
   alignment = 'right'
 
   [[blocks.segments]]
-    type = 'time'
+    type = 'text'
     style = 'powerline'
-    leading_powerline_symbol = "\uE0BA"
-    powerline_symbol = "\uE0B4"
-    background = 'magenta'
+    powerline_symbol = "\uE0BC"
+    background = 'transparent'
+    foreground = 'green'
+    template = "\uE0BB"
+
+  [[blocks.segments]]
+    type = 'time'
+    style = 'diamond'
+    leading_diamond = "\uE0BA"
+    trailing_diamond = "\uE0B4"
+    background = 'green'
     foreground = 'black'
-    template = ' in {{ .Shell }} at {{ .CurrentDate | date .Format }} '
+    template = ' in <b>{{ .Shell }}</b> at <b>{{ .CurrentDate | date .Format }}</b> '
 
 [[blocks]]
   type = 'prompt'
@@ -47,7 +72,7 @@ enable_cursor_positioning = true
     background = 'transparent'
     foreground_templates = [
       "{{ if gt .Code 0 }}red{{ end }}",
-      "{{ if eq .Code 0 }}magenta{{ end }}",
+      "{{ if eq .Code 0 }}blue{{ end }}",
     ]
     template = "\u276f"
 
@@ -71,6 +96,6 @@ enable_cursor_positioning = true
   background = 'transparent' 
   foreground_templates = [
     "{{ if gt .Code 0 }}red{{ end }}",
-    "{{ if eq .Code 0 }}magenta{{ end }}",
+    "{{ if eq .Code 0 }}green{{ end }}",
   ]
   template = "\u276f "
