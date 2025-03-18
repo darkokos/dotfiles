@@ -9,7 +9,7 @@ window#waybar {
 
 .module {
     background-color: rgba(27, 30, 53, 0.8);
-    border: 1.25px solid rgba(225, 172, 255, 0.8);
+    border: 1.25px solid rgba(225, 172, 255, 0.9);
     border-radius: 10px;
 }
 
@@ -19,7 +19,7 @@ window#waybar {
 }
 
 #workspaces button {
-    background-color: rgba(68, 71, 90, 0.8);
+    background-color: rgba(68, 71, 90, 0.9);
     border-radius: 8.75px;
     margin: 4px 4px 4px 0;
 }
