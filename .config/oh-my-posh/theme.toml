@@ -1,0 +1,76 @@
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+version = 3
+final_space = true
+enable_cursor_positioning = true
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'powerline'
+    leading_powerline_symbol = "\uE0B6"
+    background = 'magenta'
+    foreground = 'black'
+    template = ' {{ .UserName }}@{{ .HostName }} '
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'powerline'
+    powerline_symbol = "\uE0BC"
+    background = 'cyan'
+    foreground = 'black'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'right'
+
+  [[blocks.segments]]
+    type = 'time'
+    style = 'powerline'
+    leading_powerline_symbol = "\uE0BA"
+    powerline_symbol = "\uE0B4"
+    background = 'magenta'
+    foreground = 'black'
+    template = ' in {{ .Shell }} at {{ .CurrentDate | date .Format }} '
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    background = 'transparent'
+    foreground_templates = [
+      "{{ if gt .Code 0 }}red{{ end }}",
+      "{{ if eq .Code 0 }}magenta{{ end }}",
+    ]
+    template = "\u276f"
+
+[[blocks]]
+  type = 'rprompt'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    background = 'transparent'
+    foreground_templates = [
+      "{{ if gt .Code 0 }}red{{ end }}",
+      "{{ if eq .Code 0 }}green{{ end }}",
+    ]
+    template = '{{ div .Ms 1000 }}s  '
+
+    [blocks.segments.properties]
+      threshold = 5000
+
+[transient_prompt]
+  background = 'transparent' 
+  foreground_templates = [
+    "{{ if gt .Code 0 }}red{{ end }}",
+    "{{ if eq .Code 0 }}magenta{{ end }}",
+  ]
+  template = "\u276f "
