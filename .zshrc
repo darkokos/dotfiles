@@ -114,4 +114,4 @@ fastfetch
 
 eval "$(zoxide init zsh)"
 
-bindkey -s '^L' 'clear^M'
+bindkey -s '^L' '^Uclear^M'
