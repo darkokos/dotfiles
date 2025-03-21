@@ -14,7 +14,7 @@ enable_cursor_positioning = true
     leading_powerline_symbol = "\uE0B6"
     background = 'blue'
     foreground = 'black'
-    template = ' <b>{{ .UserName }}@{{ .HostName }}</b> '
+    template = " 󰣇 <b>{{ .UserName }}@{{ .HostName }}</b> "
 
   [[blocks.segments]]
     type = 'path'
@@ -22,7 +22,7 @@ enable_cursor_positioning = true
     powerline_symbol = "\uE0BC"
     background = 'cyan'
     foreground = 'black'
-    template = ' <b>{{ .Path }}</b> '
+    template = '  <b>{{ .Path }}</b> '
 
   [[blocks.segments]]
     type = 'git'
