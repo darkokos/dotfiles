@@ -22,7 +22,11 @@ enable_cursor_positioning = true
     powerline_symbol = "\uE0BC"
     background = 'cyan'
     foreground = 'black'
-    template = '  <b>{{ .Path }}</b> '
+    template = ' {{ if eq .PWD "~" }}{{ else }}{{ end }} <b>{{ .Path }}</b> '
+
+    [blocks.segments.properties]
+      style = 'agnoster_short'
+      max_depth = 3
 
   [[blocks.segments]]
     type = 'git'
@@ -59,7 +63,7 @@ enable_cursor_positioning = true
     trailing_diamond = "\uE0B4"
     background = 'green'
     foreground = 'black'
-    template = ' in <b>{{ .Shell }}</b> at <b>{{ .CurrentDate | date .Format }}</b> '
+    template = ' in <b>{{ .Shell }}</b> at <b>{{ .CurrentDate | date .Format }}</b> 󱑂 '
 
 [[blocks]]
   type = 'prompt'
