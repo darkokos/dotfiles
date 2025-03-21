@@ -65,6 +65,9 @@ enable_cursor_positioning = true
     foreground = 'black'
     template = ' in <b>{{ .Shell }}</b> at <b>{{ .CurrentDate | date .Format }}</b> 󱑂 '
 
+    [blocks.segments.properties]
+      time_format = "15:04:05 PM"
+
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
