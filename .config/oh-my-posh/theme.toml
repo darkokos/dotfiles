@@ -36,6 +36,9 @@ enable_cursor_positioning = true
     foreground = 'black'
     template = ' <b>{{ .HEAD }}</b> '
 
+    [blocks.segments.properties]
+      branch_icon = '󰘬 '
+
   [[blocks.segments]]
     type = 'text'
     style = 'powerline'
