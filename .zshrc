@@ -110,7 +110,7 @@ alias vim="nvim"
 
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/theme.toml)"
 
-fastfetch
+macchina
 
 eval "$(zoxide init zsh)"
 
