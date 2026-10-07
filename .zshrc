@@ -74,7 +74,7 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-source /usr/share/zsh/plugins/zsh-you-should-use/zsh-you-should-use.plugin.zsh
+source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh
 
 # User configuration
 
@@ -123,3 +123,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# Pi
+export PATH="$HOME/.local/bin:$PATH"
