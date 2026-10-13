@@ -11,5 +11,5 @@ local run_script = require("lib/script")
 
 hl.bind("XF86AudioMicMute", run_script("microphone.sh", "toggle"), { locked = true })
 
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 10%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 10%-"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", run_script("brightness.sh", "up"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", run_script("brightness.sh", "down"), { locked = true, repeating = true })
