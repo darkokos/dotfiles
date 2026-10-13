@@ -368,8 +368,8 @@
     # Icon for notifications with critical urgency
     default_icon = dialog-warning
 
-[volume-muted]
-    appname = volume-muted
+[icon-only]
+    appname = icon-only
     format = "%s"
 
 # Every section that isn't one of the above is interpreted as a rules to

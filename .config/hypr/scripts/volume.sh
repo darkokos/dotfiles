@@ -36,7 +36,7 @@ ICON_MID=$'\U000F0580'
 ICON_HIGH=$'\U000F057E'
 
 if [[ $out == *MUTED* ]]; then
-	dunstify -a volume-muted -t 4000 -r 1 "$ICON_MUTED" ""
+	dunstify -a icon-only -t 4000 -r 1 "$ICON_MUTED" ""
 	exit 0
 fi
 
