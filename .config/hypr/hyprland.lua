@@ -1,4 +1,4 @@
-local host = require("./host")
+local host = require("host")
 if host then
 	require(host)
 end
@@ -18,6 +18,7 @@ local browser = "firefox"
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd(bar)
+	hl.exec_cmd("dunst")
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd(terminal, { workspace = "1 silent" })
 	hl.exec_cmd(browser, { workspace = "2 silent" })
@@ -252,12 +253,6 @@ hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:mag
 
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
-
-hl.bind(
-	"XF86AudioMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-	{ locked = true, repeating = true }
-)
 
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
