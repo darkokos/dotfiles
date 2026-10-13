@@ -263,6 +263,8 @@ local run_script = require("lib/script")
 
 hl.bind(mainMod .. " + w", run_script("relaunch_waybar.sh"))
 
+hl.bind(mainMod .. " + CTRL + s", run_script("screenshot.sh"))
+
 --#############################
 --## WINDOWS AND WORKSPACES ###
 --#############################
