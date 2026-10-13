@@ -1,5 +1,4 @@
-local HYPR = (os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")) .. "/hypr"
-local SCRIPT = "bash '" .. HYPR .. "/scripts/volume.sh' "
+local run_script = require("lib/script")
 
 return function(step)
 	assert(
@@ -7,7 +6,7 @@ return function(step)
 		"volume step must be a positive whole number, got " .. tostring(step)
 	)
 
-	hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(SCRIPT .. "up " .. step), { locked = true, repeating = true })
-	hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(SCRIPT .. "down " .. step), { locked = true, repeating = true })
-	hl.bind("XF86AudioMute", hl.dsp.exec_cmd(SCRIPT .. "mute"), { locked = true })
+	hl.bind("XF86AudioRaiseVolume", run_script("volume.sh", "up " .. step), { locked = true, repeating = true })
+	hl.bind("XF86AudioLowerVolume", run_script("volume.sh", "down " .. step), { locked = true, repeating = true })
+	hl.bind("XF86AudioMute", run_script("volume.sh", "mute"), { locked = true })
 end
