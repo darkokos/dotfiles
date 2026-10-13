@@ -12,6 +12,17 @@ hl.monitor({
 	scale = "1",
 })
 
+hl.bind(
+	"XF86AudioRaiseVolume",
+	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 2%+"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86AudioLowerVolume",
+	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"),
+	{ locked = true, repeating = true }
+)
+
 hl.workspace_rule({ workspace = "1", monitor = "DP-1", default = true, persistent = true })
 hl.workspace_rule({ workspace = "2", monitor = "DP-2", persistent = true })
 hl.workspace_rule({ workspace = "3", monitor = "DP-2", default = true, persistent = true })

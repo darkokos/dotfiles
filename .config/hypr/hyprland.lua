@@ -7,18 +7,20 @@ end
 --## MY PROGRAMS ###
 --##################
 
+local bar = "waybar"
 local terminal = "kitty"
 local menu = "rofi -show drun"
+local browser = "firefox"
 
 --################
 --## AUTOSTART ###
 --################
 
 hl.on("hyprland.start", function()
-	hl.exec_cmd("waybar")
+	hl.exec_cmd(bar)
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd(terminal, { workspace = "1 silent" })
-	hl.exec_cmd("firefox", { workspace = "2 silent" })
+	hl.exec_cmd(browser, { workspace = "2 silent" })
 	hl.exec_cmd("discord")
 	hl.exec_cmd("fractal", { workspace = "3 silent" })
 	hl.exec_cmd("spotify-launcher", { workspace = "4 silent" })
@@ -252,27 +254,10 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
 
 hl.bind(
-	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
-	{ locked = true, repeating = true }
-)
-hl.bind(
 	"XF86AudioMute",
 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
 	{ locked = true, repeating = true }
 )
-hl.bind(
-	"XF86AudioMicMute",
-	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-	{ locked = true, repeating = true }
-)
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 10%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 10%-"), { locked = true, repeating = true })
 
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
