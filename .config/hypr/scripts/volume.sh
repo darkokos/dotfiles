@@ -48,4 +48,4 @@ else
 	icon=$ICON_HIGH
 fi
 
-dunstify -a volume -t 4000 -r 1 -h int:value:"$vol" "$icon" "$vol"
+dunstify -a volume -t 4000 -r 1 -h int:value:"$vol" "$icon" "$vol%"
