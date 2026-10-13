@@ -19,6 +19,9 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd(terminal, { workspace = "1 silent" })
 	hl.exec_cmd("firefox", { workspace = "2 silent" })
+	hl.exec_cmd("discord")
+	hl.exec_cmd("fractal", { workspace = "3 silent" })
+	hl.exec_cmd("spotify-launcher", { workspace = "4 silent" })
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 end)
 
@@ -29,6 +32,7 @@ end)
 hl.env("XCURSOR_SIZE", "28")
 hl.env("HYPRCURSOR_SIZE", "28")
 hl.env("EDITOR", "nvim")
+hl.env("GTK_THEME", "Dracula:dark")
 
 --####################
 --## LOOK AND FEEL ###
@@ -297,3 +301,5 @@ hl.window_rule({
 	},
 	no_focus = true,
 })
+
+hl.window_rule({ name = "discord", match = { class = "^(discord)$" }, workspace = "3 silent" })
