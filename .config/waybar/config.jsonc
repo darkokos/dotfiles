@@ -134,7 +134,9 @@
     "tray": {
         "spacing": 10
     },
-    "hyprland/language": {},
+    "hyprland/language": {
+        "format": "{shortDescription} ({short})",
+    },
     "custom/power": {
         "format" : "⏻ ",
 		"tooltip": false,
