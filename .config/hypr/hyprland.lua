@@ -10,6 +10,7 @@ end
 local bar = "waybar"
 local terminal = "kitty"
 local menu = "rofi -show drun"
+local dmenu = "rofi -dmenu"
 local browser = "firefox"
 
 --################
@@ -263,7 +264,7 @@ local run_script = require("lib/script")
 
 hl.bind(mainMod .. " + w", run_script("relaunch_waybar.sh"))
 
-hl.bind(mainMod .. " + CTRL + s", run_script("screenshot.sh"))
+hl.bind(mainMod .. " + CTRL + s", run_script("screenshot.sh", { dmenu }))
 
 --#############################
 --## WINDOWS AND WORKSPACES ###
