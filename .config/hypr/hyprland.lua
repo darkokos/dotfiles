@@ -12,10 +12,12 @@ local terminal = "kitty"
 local menu = "rofi -show drun"
 local dmenu = "rofi -dmenu"
 local browser = "firefox"
+local idle = "hypridle"
+local widget = "eww daemon"
 
---################
---## AUTOSTART ###
---################
+--#############
+--## EVENTS ###
+--#############
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd(bar)
@@ -27,6 +29,14 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("fractal", { workspace = "3 silent" })
 	hl.exec_cmd("spotify-launcher", { workspace = "4 silent" })
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+	hl.exec_cmd(idle)
+	hl.exec_cmd(widget)
+end)
+
+hl.on("layer.closed", function(layer)
+	if layer.namespace == "eww-media" then
+		hl.dispatch(hl.dsp.submap("reset"))
+	end
 end)
 
 --############################
@@ -208,63 +218,91 @@ hl.animation({
 --## KEYBINDINGS ###
 --##################
 
+local function ubind(keys, dsp, opts)
+	opts = opts or {}
+	opts.submap_universal = true
+	hl.bind(keys, dsp, opts)
+end
+
+local function cursor_over_media()
+	local c = hl.get_cursor_pos()
+	for _, l in ipairs(hl.get_layers()) do
+		if l.namespace == "eww-media" then
+			return c.x >= l.x and c.x <= l.x + l.w and c.y >= l.y and c.y <= l.y + l.h
+		end
+	end
+	return false
+end
+
 local mainMod = "ALT"
 
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exit())
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+ubind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
+ubind(mainMod .. " + C", hl.dsp.window.close())
+ubind(mainMod .. " + SHIFT + M", hl.dsp.exit())
+ubind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+ubind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+ubind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
-hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
+ubind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
+ubind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
+ubind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
+ubind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
 
-hl.bind(mainMod .. " + 1", hl.dsp.focus({ workspace = 1 }))
-hl.bind(mainMod .. " + 2", hl.dsp.focus({ workspace = 2 }))
-hl.bind(mainMod .. " + 3", hl.dsp.focus({ workspace = 3 }))
-hl.bind(mainMod .. " + 4", hl.dsp.focus({ workspace = 4 }))
-hl.bind(mainMod .. " + 5", hl.dsp.focus({ workspace = 5 }))
-hl.bind(mainMod .. " + 6", hl.dsp.focus({ workspace = 6 }))
-hl.bind(mainMod .. " + 7", hl.dsp.focus({ workspace = 7 }))
-hl.bind(mainMod .. " + 8", hl.dsp.focus({ workspace = 8 }))
-hl.bind(mainMod .. " + 9", hl.dsp.focus({ workspace = 9 }))
-hl.bind(mainMod .. " + 0", hl.dsp.focus({ workspace = 10 }))
+ubind(mainMod .. " + 1", hl.dsp.focus({ workspace = 1 }))
+ubind(mainMod .. " + 2", hl.dsp.focus({ workspace = 2 }))
+ubind(mainMod .. " + 3", hl.dsp.focus({ workspace = 3 }))
+ubind(mainMod .. " + 4", hl.dsp.focus({ workspace = 4 }))
+ubind(mainMod .. " + 5", hl.dsp.focus({ workspace = 5 }))
+ubind(mainMod .. " + 6", hl.dsp.focus({ workspace = 6 }))
+ubind(mainMod .. " + 7", hl.dsp.focus({ workspace = 7 }))
+ubind(mainMod .. " + 8", hl.dsp.focus({ workspace = 8 }))
+ubind(mainMod .. " + 9", hl.dsp.focus({ workspace = 9 }))
+ubind(mainMod .. " + 0", hl.dsp.focus({ workspace = 10 }))
 
-hl.bind(mainMod .. " + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
-hl.bind(mainMod .. " + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
-hl.bind(mainMod .. " + SHIFT + 3", hl.dsp.window.move({ workspace = 3 }))
-hl.bind(mainMod .. " + SHIFT + 4", hl.dsp.window.move({ workspace = 4 }))
-hl.bind(mainMod .. " + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
-hl.bind(mainMod .. " + SHIFT + 6", hl.dsp.window.move({ workspace = 6 }))
-hl.bind(mainMod .. " + SHIFT + 7", hl.dsp.window.move({ workspace = 7 }))
-hl.bind(mainMod .. " + SHIFT + 8", hl.dsp.window.move({ workspace = 8 }))
-hl.bind(mainMod .. " + SHIFT + 9", hl.dsp.window.move({ workspace = 9 }))
-hl.bind(mainMod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = 10 }))
+ubind(mainMod .. " + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
+ubind(mainMod .. " + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
+ubind(mainMod .. " + SHIFT + 3", hl.dsp.window.move({ workspace = 3 }))
+ubind(mainMod .. " + SHIFT + 4", hl.dsp.window.move({ workspace = 4 }))
+ubind(mainMod .. " + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
+ubind(mainMod .. " + SHIFT + 6", hl.dsp.window.move({ workspace = 6 }))
+ubind(mainMod .. " + SHIFT + 7", hl.dsp.window.move({ workspace = 7 }))
+ubind(mainMod .. " + SHIFT + 8", hl.dsp.window.move({ workspace = 8 }))
+ubind(mainMod .. " + SHIFT + 9", hl.dsp.window.move({ workspace = 9 }))
+ubind(mainMod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = 10 }))
 
-hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "l" }))
-hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "d" }))
-hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "u" }))
-hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "r" }))
+ubind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "l" }))
+ubind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "d" }))
+ubind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "u" }))
+ubind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "r" }))
 
-hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+ubind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
+ubind(mainMod .. " + SHIFT + S", function()
+	hl.dispatch(hl.dsp.window.move({ workspace = "special:magic" }))
+	if not cursor_over_media() then
+		hl.dispatch(hl.dsp.submap("reset"))
+	end
+end)
 
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
+ubind(mainMod .. " + mouse:272", hl.dsp.window.drag())
+ubind(mainMod .. " + mouse:273", hl.dsp.window.resize())
 
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+ubind(mainMod .. " + M", hl.dsp.exec_cmd("eww open --toggle media"))
+ubind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+ubind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+ubind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+ubind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
 local run_script = require("lib/script")
 
-hl.bind(mainMod .. " + w", run_script("relaunch_waybar.sh"))
+ubind(mainMod .. " + w", run_script("relaunch_waybar.sh"))
 
-hl.bind(mainMod .. " + CTRL + s", run_script("screenshot.sh", { dmenu }))
+ubind(mainMod .. " + CTRL + s", run_script("screenshot.sh", { dmenu }))
+
+hl.define_submap("media", function()
+	hl.bind("left", hl.dsp.exec_cmd("playerctl position 5-"), { repeating = true })
+	hl.bind("right", hl.dsp.exec_cmd("playerctl position 5+"), { repeating = true })
+	hl.bind("space", hl.dsp.exec_cmd("playerctl play-pause"), { repeating = true })
+end)
 
 --#############################
 --## WINDOWS AND WORKSPACES ###

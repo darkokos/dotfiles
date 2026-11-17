@@ -1,0 +1,55 @@
+(deflisten state
+	:initial '{"status":"Stopped","title":"Nothing playing","artist":"","art":"","len":1,"len_text":"--:--","cover":130}'
+	`./scripts/media.sh`)
+
+(deflisten art :initial "none" `./scripts/art.sh`)
+
+(defpoll pos :interval "1s" :initial "0"
+	`playerctl position 2>/dev/null || echo 0`)
+
+(defpoll pos_text :interval "1s" :initial "0:00"
+	`(playerctl position 2>/dev/null || echo 0) | awk '{
+		s=int($1); h=int(s/3600); m=int((s%3600)/60); s=s%60;
+		if (h>0) printf "%d:%02d:%02d", h, m, s; else printf "%d:%02d", m, s}'`)
+
+(defvar show_remaining "false")
+
+(defpoll rem_text :interval "1s" :initial "--:--"
+	`(playerctl position 2>/dev/null || echo 0; playerctl metadata --format '{{mpris:length}}' 2>/dev/null || echo 0) | awk '
+		NR==1 {p=$1}
+		NR==2 {l=$1/1000000}
+		END {
+			if (l <= 0) { print "--:--"; exit }
+			r=l-p; if (r<0) r=0
+			s=int(r); h=int(s/3600); m=int((s%3600)/60); s=s%60
+			if (h>0) printf "-%d:%02d:%02d", h, m, s; else printf "-%d:%02d", m, s
+		}'`)
+
+(defwidget media-box []
+	(eventbox 	:onhover "hyprctl dispatch 'hl.dsp.submap(\"media\")'"
+			:onhoverlost "hyprctl dispatch 'hl.dsp.submap(\"reset\")'"
+		(box :class "media" :orientation "h" :space-evenly false :spacing 14
+			(box 	:class "cover" :valign "center" :halign "start"
+				:visible {art != "" && art != "none"}
+				:style "background-image: url('${art}'); min-width: ${state.cover}px; min-height: ${state.cover}px;")
+			(box :orientation "v" :space-evenly false :spacing 8 :width 250 :hexpand false :valign "center"
+				(label 	:class "title"	:text {state.title}	:xalign 0)
+				(label 	:class "artist"	:text {state.artist}	:xalign 0)
+				(scale 	:class "seek" :min 0 :max {state.len > 0 ? state.len : 1} :value pos
+					:onchange "playerctl position {}")
+				(box :class "times" :space-evenly false
+					(label :class "time" :text pos_text :xalign 0 :hexpand true)
+					(eventbox 	:cursor "pointer"
+							:onclick "eww update show_remaining=${show_remaining == 'true' ? 'false' : 'true'}"
+						(label :class "time" :text {show_remaining == "true" ? rem_text : state.len_text} :xalign 1)))
+				(box :class "controls" :halign "center" :spacing 16
+					(button :onclick "playerctl previous" "󰒮")
+					(button :onclick "playerctl play-pause" {state.status == "Playing" ? "󰏤" : "󰐊"})
+					(button :onclick "playerctl next" "󰒭"))))))
+
+(defwindow media
+	:monitor 0
+	:geometry (geometry :x "0px" :y "20px" :anchor "bottom center")
+	:stacking "fg"
+	:namespace "eww-media"
+	(media-box))

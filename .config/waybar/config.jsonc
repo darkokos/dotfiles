@@ -4,23 +4,21 @@
     "margin": "8 8 0 8",
     "modules-left": [
         "ext/workspaces",
-        "custom/media"
     ],
     "modules-center": [
         "hyprland/window"
     ],
     "modules-right": [
-        "mpd",
+        "mpris",
         "pulseaudio",
         "network",
         "cpu",
         "memory",
         "temperature",
         "backlight",
-        "battery",
         "clock",
-        "tray",
         "hyprland/language",
+        "battery",
         "custom/power"
     ],
     "ext/workspaces": {
@@ -36,42 +34,11 @@
         },
         "on-click": "activate"
     },
-    "custom/media": {
-        "format": "{icon} {}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
-        "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
+    "mpris": {
+        "format": "{player_icon} {title}",
+        "player-icons": { "default": "", "spotify": "" },
+        "on-click": "eww open --toggle media",
+        "on-click-right": "playerctl play-pause",
     },
     "pulseaudio": {
         "format": "{volume}% {icon} {format_source}",
@@ -115,6 +82,13 @@
         "format": "{percent}% {icon}",
         "format-icons": ["󰌶", "󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󱩖", "󰛨"]
     },
+    "clock": {
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%A, %d.%m.%Y.}"
+    },
+    "hyprland/language": {
+        "format": "{shortDescription} ({short})",
+    },
     "battery": {
         "states": {
             "warning": 30,
@@ -126,16 +100,6 @@
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
         "format-icons": ["", "", "", "", ""]
-    },
-    "clock": {
-        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%A, %d.%m.%Y.}"
-    },
-    "tray": {
-        "spacing": 10
-    },
-    "hyprland/language": {
-        "format": "{shortDescription} ({short})",
     },
     "custom/power": {
         "format" : "⏻ ",
